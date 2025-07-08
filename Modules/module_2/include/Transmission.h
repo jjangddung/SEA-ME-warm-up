@@ -6,7 +6,7 @@
 
 
 
-class Transmission{
+class Transmission : public Part{
     private :
         int gear;
     

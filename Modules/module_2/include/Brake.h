@@ -12,7 +12,7 @@ class Brake : public Part{
     public :
         Brake(bool br = false);
         void print() const override ;
-        bool set_brake(bool on) const ;
+        void set_brake(bool on)  ;
 
 
 

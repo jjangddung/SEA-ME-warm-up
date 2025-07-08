@@ -10,6 +10,7 @@
 #include "Part.h"
 #include "Brake.h"
 #include "Engine.h"
+#include "Wheel.h"
 #include "Transmission.h"
 #include <vector>
 #include <memory>
@@ -37,6 +38,8 @@ class Car {
         void turn_right() ;
         
         void turn_left();
+
+        void stop();
 
 
 };
