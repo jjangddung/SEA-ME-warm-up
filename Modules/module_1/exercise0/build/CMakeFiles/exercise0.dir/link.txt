@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/exercise0.dir/src/main.cpp.o CMakeFiles/exercise0.dir/src/car.cpp.o  -o exercise0 
