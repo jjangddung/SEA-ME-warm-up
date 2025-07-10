@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddDialog</class>
+ <widget class="QWidget" name="AddDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>437</width>
+    <height>319</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLineEdit" name="lineEdit_name">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>100</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>name</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_phone">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>100</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>phone</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_email">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>100</y>
+     <width>113</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>email</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_bookmark">
+   <property name="geometry">
+    <rect>
+     <x>80</x>
+     <y>160</y>
+     <width>91</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>bookmark</string>
+   </property>
+  </widget>
+  <widget class="QDialogButtonBox" name="buttonBox">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>160</y>
+     <width>166</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="standardButtons">
+    <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
