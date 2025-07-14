@@ -6,7 +6,15 @@
 
 class Obstacle : public QGraphicsPixmapItem {
 public:
-    Obstacle(const QPixmap &pixmap);
+
+    explicit Obstacle(const QPixmap &pixmap);
+
+    // Rule of Three
+    Obstacle(const Obstacle& other);
+    Obstacle& operator=(const Obstacle& other);
+    ~Obstacle();
+
+
     void moveDown();
 };
 

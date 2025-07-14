@@ -6,7 +6,19 @@
 class Car : public QGraphicsPixmapItem
 {
 public:
-    Car(const QPixmap &pixmap);
+
+    explicit Car(const QPixmap &pixmap);
+
+
+    Car(const Car& other);
+
+
+    Car& operator=(const Car& other);
+
+
+    ~Car();
+
+    // 동작
     void moveLeft();
     void moveRight();
 };

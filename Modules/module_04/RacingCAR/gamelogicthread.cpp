@@ -1,49 +1,60 @@
-// gamelogicthread.cpp
 #include "gamelogicthread.h"
-#include <QGraphicsRectItem>
-#include <QRandomGenerator>
+#include <QMetaObject>
+#include <QThread>
 
-GameLogicThread::GameLogicThread(QGraphicsScene *scene, Car *car, QObject *parent)
-    : QThread(parent), scene(scene), car(car) {}
+GameLogicThread::GameLogicThread(QGraphicsScene* scene, Car* car, const QPixmap& obsPixmap, QObject* parent)
+    : QThread(parent),
+    scene(scene),
+    car(car),
+    obstaclePixmap(obsPixmap),
+    gen(std::random_device{}()),
+    dist(0, 359)
+{}
+
+void GameLogicThread::stop() {
+    running = false;
+}
 
 void GameLogicThread::run() {
-    while (running) {
-        QThread::msleep(30);
+    running = true;
+    int frameCounter = 0;
 
-        QMetaObject::invokeMethod(scene, [=]() {
-            // 장애물 이동 및 제거
-            for (QGraphicsItem *item : scene->items()) {
-                if (item != car && dynamic_cast<QGraphicsRectItem *>(item)) {
-                    item->moveBy(0, 5);
-                    if (item->y() > 600) {
-                        scene->removeItem(item);
-                        delete item;
-                    }
+    while (running) {
+        if (frameCounter % 20 == 0) {
+            QMetaObject::invokeMethod(scene, [this]() {
+                int x = dist(gen);
+                auto* obs = new Obstacle(obstaclePixmap);
+                obs->setPos(x, 0);
+                scene->addItem(obs);
+                obstacles.append(obs);
+            }, Qt::QueuedConnection);
+        }
+
+        QMetaObject::invokeMethod(scene, [this]() {
+            QList<Obstacle*> toRemove;
+
+            for (Obstacle* obs : obstacles) {
+                obs->moveDown();
+
+                if (car && obs->collidesWithItem(car)) {
+                    emit gameOver();
+                    stop();
+                    return;
+                }
+
+                if (obs->y() > 600) {
+                    scene->removeItem(obs);
+                    toRemove.append(obs);
                 }
             }
 
-            if (QRandomGenerator::global()->bounded(20) == 0) {
-                spawnObstacle();
+            for (Obstacle* obs : toRemove) {
+                obstacles.removeOne(obs);
+                delete obs;
             }
-
-            checkCollisions();
         }, Qt::QueuedConnection);
-    }
-}
 
-void GameLogicThread::spawnObstacle() {
-    QGraphicsRectItem *obs = new QGraphicsRectItem(0, 0, 40, 40);
-    obs->setBrush(Qt::blue);
-    int x = QRandomGenerator::global()->bounded(60, 300); // 트랙 안쪽에서만
-    obs->setPos(x, -40);
-    scene->addItem(obs);
-}
-
-void GameLogicThread::checkCollisions() {
-    for (QGraphicsItem *item : scene->collidingItems(car)) {
-        if (item != car) {
-            running = false;
-            emit gameOver();
-        }
+        QThread::msleep(50);  // 20 FPS
+        frameCounter++;
     }
 }

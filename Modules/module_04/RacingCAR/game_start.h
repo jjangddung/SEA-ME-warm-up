@@ -15,15 +15,19 @@ public:
     explicit GameStart(QWidget *parent = nullptr);
     ~GameStart();
 
+    // Rule of Three 적용 (복사 금지)
+    GameStart(const GameStart&) = delete;
+    GameStart& operator=(const GameStart&) = delete;
+
 signals:
     void startClicked();
 
 protected:
-    void resizeEvent(QResizeEvent *event) override;  // 🔄 크기 변경 대응
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     Ui::GameStart *ui;
-    void updateBackground();  // 🔧 배경 이미지 설정 함수
+    void updateBackground();
 };
 
 #endif // GAME_START_H

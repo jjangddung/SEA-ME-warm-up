@@ -7,6 +7,32 @@ Car::Car(const QPixmap &pixmap)
     setFocus();
 }
 
+
+Car::Car(const Car& other)
+{
+    setPixmap(other.pixmap());
+    setPos(other.pos());
+    setFlag(QGraphicsItem::ItemIsFocusable);
+    setFocus();
+}
+
+
+Car& Car::operator=(const Car& other)
+{
+    if (this != &other) {
+        setPixmap(other.pixmap());
+        setPos(other.pos());
+        setFlag(QGraphicsItem::ItemIsFocusable);
+        setFocus();
+    }
+    return *this;
+}
+
+
+Car::~Car()
+{
+}
+
 void Car::moveLeft()
 {
     setPos(pos() + QPointF(-10, 0));
